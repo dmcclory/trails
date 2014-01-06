@@ -48,38 +48,47 @@ describe Trails::Router do
 
   describe "#action_for" do
     let(:router) { described_class.new }
+    subject { router.action_for(request, method) }
+
     context "route matches :index action" do
-      subject { router.action_for("") }
+      let(:request) { "" }
+      let(:method) { "GET" }
       it { should == :index }
     end
 
     context "route matches :new action" do
-      subject { router.action_for("/new", "GET") }
+      let(:request) { "/new" }
+      let(:method) { "GET" }
       it { should == :new }
     end
 
     context "route matches :create action" do
-      subject { router.action_for("", "POST") }
+      let(:request) { "" }
+      let(:method) { "POST" }
       it { should == :create }
     end
 
     context "route matches :show action" do
-      subject { router.action_for("/123") }
+      let(:request) { "/123" }
+      let(:method) { "GET" }
       it { should == :show }
     end
 
     context "route matches :edit action" do
-      subject { router.action_for("/123/edit", "GET") }
+      let(:request) { "/123/edit" }
+      let(:method) { "GET" }
       it { should == :edit }
     end
 
     context "route matches :update action" do
-      subject { router.action_for("/123", "PUT") }
+      let(:request) { "/123" }
+      let(:method) { "PUT" }
       it { should == :update }
     end
 
     context "route matches :destroy action" do
-      subject { router.action_for("/123", "DELETE") }
+      let(:request) { "/123" }
+      let(:method) { "DELETE" }
       it { should == :destroy }
     end
   end
