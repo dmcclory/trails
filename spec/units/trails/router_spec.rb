@@ -2,18 +2,33 @@ require 'spec_helper'
 
 describe Trails::Router do
 
-  let(:foo_controller_class) { double name: :FooController }
-  let(:env) { { "PATH_INFO" => "/foo" , "REQUEST_METHOD" => "GET"} }
+  let(:foo_controller_class) { class_double("FoosController").as_stubbed_const }
+  let(:env) { { "PATH_INFO" => "/foos" , "REQUEST_METHOD" => "GET"} }
   let(:endpoint) { double( call: [200, {}, ['Success!'] ] ) }
   let(:foo_controller) {
-    double( action: endpoint, class: foo_controller_class )
+    instance_double("FoosController")
   }
   let(:missing_resource_controller) { double }
+
+  describe "#resources" do
+    context "when given a plural resource name" do
+      before do
+        allow(foo_controller_class).to receive(:new).and_return( foo_controller )
+        allow(foo_controller).to receive(:resource_name).and_return("Foos")
+      end
+      it "adds a new resource controller to the router's list of controller" do
+        subject.resources :foos
+        expect(subject.controllers).to include(foo_controller)
+      end
+    end
+  end
 
   describe "#call" do
     context "route matches Controller & action for an endpoint" do
       before do
         subject.controllers = [foo_controller]
+        allow(foo_controller).to receive(:resource_name).and_return("Foos")
+        allow(foo_controller).to receive(:action).and_return(endpoint)
       end
       it "calls the endpoint" do
          subject.call(env)
@@ -24,14 +39,14 @@ describe Trails::Router do
 
   describe "#controller_for" do
     before do
-      stub_const("FooController", foo_controller_class)
       subject.controllers = [foo_controller]
       subject.missing_resource_controller = missing_resource_controller
+      allow(foo_controller).to receive(:resource_name).and_return("Foos")
     end
 
     context "route's first segment matches a controller's class name" do
-      let(:route) { "/foo" }
-      it "returns the FooController" do
+      let(:route) { "/foos" }
+      it "returns the FoosController" do
         expect(subject.controller_for(route)).to eq foo_controller
       end
     end

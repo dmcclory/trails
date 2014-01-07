@@ -5,6 +5,21 @@ module Trails
     attr_accessor :controllers
     attr_accessor :missing_resource_controller
 
+    def initialize
+      @controllers = []
+    end
+
+    def draw()
+      yield(self) if block_given?
+    end
+
+    def resources(name)
+      resource_controller = name.capitalize.to_s + "Controller"
+      controller = Module.const_get(resource_controller).new
+      controllers.delete(controller)
+      controllers << controller
+    end
+
     def call(env)
       resource, rest = split_url(env["PATH_INFO"])
       controller = controller_for(resource)
@@ -15,7 +30,7 @@ module Trails
 
     def controller_for(route)
       resource_name = route.split("/")[1].capitalize
-      controller = self.controllers.select { |c| /#{resource_name}Controller/ =~ c.class.name }.first
+      controller = self.controllers.select { |c| resource_name == c.resource_name }.first
       controller || missing_resource_controller
     end
 
@@ -30,6 +45,8 @@ module Trails
         with(_[_, "DELETE"]) { :destroy }
       end
     end
+
+    private
 
     def split_url url
       _, prefix, rest = url.split("/", 3).map {|s| "/" + s }
