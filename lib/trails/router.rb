@@ -8,7 +8,7 @@ module Trails
     def call(env)
       first, rest = split_url(env["PATH_INFO"])
       controller = controller_for(first)
-      action = action_for(rest, env["METHOD"])
+      action = action_for(rest, env["REQUEST_METHOD"])
       app = controller.action(action)
       app.call(env)
     end

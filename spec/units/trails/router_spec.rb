@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Trails::Router do
 
   let(:foo_controller_class) { double name: :FooController }
-  let(:env) { { "PATH_INFO" => "/foo" , "METHOD" => "GET"} }
+  let(:env) { { "PATH_INFO" => "/foo" , "REQUEST_METHOD" => "GET"} }
   let(:endpoint) { double( call: [200, {}, ['Success!'] ] ) }
   let(:foo_controller) {
     double( action: endpoint, class: foo_controller_class )
