@@ -6,8 +6,8 @@ module Trails
     attr_accessor :missing_resource_controller
 
     def call(env)
-      first, rest = split_url(env["PATH_INFO"])
-      controller = controller_for(first)
+      resource, rest = split_url(env["PATH_INFO"])
+      controller = controller_for(resource)
       action = action_for(rest, env["REQUEST_METHOD"])
       app = controller.action(action)
       app.call(env)
