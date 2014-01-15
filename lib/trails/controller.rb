@@ -1,6 +1,9 @@
 module Trails
   class Controller
 
+    include ResponseAttrs
+    include Renderer
+
     attr_accessor :actions
 
     def initialize
