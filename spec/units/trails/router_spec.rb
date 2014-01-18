@@ -28,7 +28,7 @@ describe Trails::Router do
       before do
         subject.controllers = [foo_controller]
         allow(foo_controller).to receive(:resource_name).and_return("Foos")
-        allow(foo_controller).to receive(:action).and_return(endpoint)
+        allow(foo_controller).to receive(:action_for).and_return(endpoint)
       end
       it "calls the endpoint" do
          subject.call(env)
