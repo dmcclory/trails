@@ -32,4 +32,15 @@ describe Trails::Controller do
       expect(subject).to respond_to(:call)
     end
   end
+
+  describe "#resource_name" do
+    let(:foos_controller_class) {
+      stub_const("FoosController", Class.new(described_class ))
+    }
+    subject { foos_controller_class.new }
+
+    it "returns the downcased & snake-cased name of the class, minus 'controller'" do
+      expect(subject.resource_name).to eq "foos"
+    end
+  end
 end

@@ -17,5 +17,9 @@ module Trails
       @actions[action]
     end
 
+    def resource_name
+      self.class.name.to_s.gsub(/Controller/, "").downcase
+    end
+
   end
 end
