@@ -14,7 +14,7 @@ describe Trails::Router do
     context "when given a plural resource name" do
       before do
         allow(foo_controller_class).to receive(:new).and_return( foo_controller )
-        allow(foo_controller).to receive(:resource_name).and_return("Foos")
+        allow(foo_controller).to receive(:resource_name).and_return("foos")
       end
       it "adds a new resource controller to the router's list of controller" do
         subject.resources :foos
@@ -27,7 +27,7 @@ describe Trails::Router do
     context "route matches Controller & action for an endpoint" do
       before do
         subject.controllers = [foo_controller]
-        allow(foo_controller).to receive(:resource_name).and_return("Foos")
+        allow(foo_controller).to receive(:resource_name).and_return("foos")
         allow(foo_controller).to receive(:action_for).and_return(endpoint)
       end
       it "calls the endpoint" do
@@ -41,7 +41,7 @@ describe Trails::Router do
     before do
       subject.controllers = [foo_controller]
       subject.missing_resource_controller = missing_resource_controller
-      allow(foo_controller).to receive(:resource_name).and_return("Foos")
+      allow(foo_controller).to receive(:resource_name).and_return("foos")
     end
 
     context "route's first segment matches a controller's class name" do

@@ -29,7 +29,7 @@ module Trails
     end
 
     def controller_for(route)
-      resource_name = route.split("/")[1].capitalize
+      resource_name = route.split("/")[1]
       controller = self.controllers.select { |c| resource_name == c.resource_name }.first
       controller || missing_resource_controller
     end
