@@ -2,34 +2,33 @@ require 'spec_helper'
 
 describe Trails::Controller do
 
-  let(:app) { lambda { [200, {}, ["Hello world!"] ] } }
-  let(:action) { :read }
-
-
-  describe "#action_for" do
-    before do
-      subject.actions[action] = app
+  let(:subclass) { Class.new(described_class) do
+      def read(*)
+        render text: "Success"
+      end
     end
-    it "retuns a Rack app" do
-      expect(subject.action_for(action)).to eq(app)
+  }
+
+  let(:response) { [200, {}, ["Success"] ] }
+  let(:controller) { subclass.new }
+
+  subject { controller }
+
+  describe "#initialize" do
+    it "creates an action for each instance method" do
+      expect(subject.actions.keys).to include(:read)
     end
   end
 
-  describe "#initialize" do
-
-    let(:subclass) { Class.new(described_class) }
-
-    before do
-      subclass.send(:define_method, :method) do
-        render "Success"
-      end
+  describe "#action_for" do
+    let (:action) { subject.action_for(:read) }
+    it "returns a Rack app for a controller action" do
+      expect(action).to respond_to(:call)
     end
-
-    let(:controller) { subclass.new }
-    subject { controller.action_for :method }
-
-    it "creates an action for each instance method" do
-      expect(subject).to respond_to(:call)
+    describe "the Rack app" do
+      it "returns a status-header-body triple" do
+        expect(action.call({})).to eq(response)
+      end
     end
   end
 

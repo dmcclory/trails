@@ -9,7 +9,10 @@ module Trails
     def initialize
       @actions = {}
       self.class.public_instance_methods.each do |action|
-        @actions[action] = lambda { |*args| self.send(:action, *args) }
+        @actions[action] = lambda { |*args|
+          self.send(action, *args)
+          [status, headers, body]
+        }
       end
     end
 
