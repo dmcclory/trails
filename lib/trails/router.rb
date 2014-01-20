@@ -13,11 +13,28 @@ module Trails
       yield(self) if block_given?
     end
 
-    def resources(name)
+    def resources(name, &block)
       resource_controller = name.capitalize.to_s + "Controller"
       controller = Module.const_get(resource_controller).new
       controllers.delete(controller)
       controllers << controller
+      self.instance_eval(&block) if block_given?
+    end
+
+    def member(&block)
+      self.instance_eval(&block) if block_given?
+    end
+
+    def collection(&block)
+      self.instance_eval(&block) if block_given?
+    end
+
+    def put(method_name)
+      controllers.first.build_app_for(method_name)
+    end
+
+    def get(method_name)
+      controllers.first.build_app_for(method_name)
     end
 
     def call(env)

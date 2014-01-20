@@ -22,6 +22,28 @@ describe Trails::Router do
           expect(subject.controllers).to include(foo_controller)
         end
       end
+
+      context "when given a custom member method" do
+        before do
+          allow(foo_controller).to receive(:build_app_for)
+        end
+        it "adds a custom member-level route to the controller" do
+          subject.resources :foos do
+            member do
+              put :put_a_bird_on_it
+            end
+          end
+          expect(foo_controller).to have_received(:build_app_for).with(:put_a_bird_on_it)
+        end
+        it "adds a custom collection-level route to the controller" do
+          subject.resources :foos do
+            collection do
+              get :special_report
+            end
+          end
+          expect(foo_controller).to have_received(:build_app_for).with(:special_report)
+        end
+      end
     end
   end
 
@@ -33,8 +55,6 @@ describe Trails::Router do
 
     describe "#call" do
       context "route matches Controller & action for an endpoint" do
-        before do
-        end
         it "calls the endpoint" do
            subject.call(env)
            expect(endpoint).to have_received(:call)
