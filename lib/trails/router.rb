@@ -31,6 +31,7 @@ module Trails
 
     def put(method_name)
       controllers.first.build_app_for(method_name)
+      routes.unshift( { path:/.*\/#{method_name}/, method: "PUT", action:  method_name } )
     end
 
     def get(method_name)
@@ -52,18 +53,23 @@ module Trails
     end
 
     def action_for(segment, method="GET")
-      match ([segment, method]) do
-        with(_["", "GET"]) { :index }
-        with(_["/new", "GET"]) { :new }
-        with(_["", "POST"]) { :create }
-        with(_[seg, "GET"], guard { seg.count("/") == 1 }) { :show }
-        with(_[seg, "GET"], guard { seg =~ /.*\/edit/ }) { :edit }
-        with(_[_, "PUT"] ) { :update }
-        with(_[_, "DELETE"]) { :destroy }
-      end
+      routes.select { |r|
+        r[:method] == method && r[:path] =~ segment
+      }.first[:action]
     end
 
     private
+
+    def routes
+      @routes ||= [ { path:/\/edit/, method: "GET", action: :edit },
+        { path:/\/new/, method: "GET", action:  :new },
+        { path:/^$/, method: "GET", action:  :index },
+        { path:/.*/, method: "GET", action: :show },
+        { path:/.*/, method: "POST", action:  :create },
+        { path:/.*/, method: "PUT", action: :update },
+        { path:/.*/, method: "DELETE", action:  :destroy }
+      ]
+    end
 
     def split_url url
       _, prefix, rest = url.split("/", 3).map {|s| "/" + s }

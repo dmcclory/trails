@@ -81,6 +81,7 @@ describe Trails::Router do
 
   describe "#action_for" do
     let(:router) { described_class.new }
+
     subject { router.action_for(request, method) }
 
     context "route matches :index action" do
@@ -123,6 +124,25 @@ describe Trails::Router do
       let(:request) { "/123" }
       let(:method) { "DELETE" }
       it { should == :destroy }
+      it "this doesn't make sense" do
+        expect(router.controllers.length).to eq 0
+      end
+    end
+
+    context "route matches a custom member action" do
+      let(:request) { "/123/put_a_bird_on_it" }
+      let(:method)  { "PUT" }
+
+      before do
+        allow(foo_controller).to receive(:build_app_for)
+        router.resources :foos do
+          member do
+            put :put_a_bird_on_it
+          end
+        end
+      end
+      it { should == :put_a_bird_on_it }
+
     end
   end
 end
