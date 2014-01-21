@@ -1,4 +1,3 @@
-require 'pattern-match'
 module Trails
   class Router
 
@@ -68,8 +67,8 @@ module Trails
     end
 
     def action_for(segment, method="GET")
-      routes.select { |r|
-        r[:method] == method && r[:path] =~ segment
+      routes.lazy.select { |route|
+        route[:method] == method && route[:path] =~ segment
       }.first[:action]
     end
 
