@@ -22,28 +22,6 @@ describe Trails::Router do
           expect(subject.controllers).to include(foo_controller)
         end
       end
-
-      context "when given a custom member method" do
-        before do
-          allow(foo_controller).to receive(:build_app_for)
-        end
-        it "adds a custom member-level route to the controller" do
-          subject.resources :foos do
-            member do
-              put :put_a_bird_on_it
-            end
-          end
-          expect(foo_controller).to have_received(:build_app_for).with(:put_a_bird_on_it)
-        end
-        it "adds a custom collection-level route to the controller" do
-          subject.resources :foos do
-            collection do
-              get :special_report
-            end
-          end
-          expect(foo_controller).to have_received(:build_app_for).with(:special_report)
-        end
-      end
     end
   end
 
@@ -130,19 +108,47 @@ describe Trails::Router do
     end
 
     context "route matches a custom member action" do
-      let(:request) { "/123/put_a_bird_on_it" }
-      let(:method)  { "PUT" }
-
       before do
-        allow(foo_controller).to receive(:build_app_for)
         router.resources :foos do
           member do
             put :put_a_bird_on_it
+            get :special_info
+            post :dont_do_that
+            delete :special_field
+            patch :update_part
           end
         end
       end
-      it { should == :put_a_bird_on_it }
 
+      context "custom put requests" do
+        let(:request) { "/123/put_a_bird_on_it" }
+        let(:method)  { "PUT" }
+        it { should == :put_a_bird_on_it }
+      end
+
+      context "custom get requests" do
+        let(:request) { "/123/special_info" }
+        let(:method)  { "GET" }
+        it { should == :special_info }
+      end
+
+      context "custom post requests" do
+        let(:request) { "/123/dont_do_that" }
+        let(:method)  { "POST" }
+        it { should == :dont_do_that }
+      end
+
+      context "custom delete requests" do
+        let(:request) { "/123/special_field" }
+        let(:method)  { "DELETE" }
+        it { should == :special_field }
+      end
+
+      context "custom patch requests" do
+        let(:request) { "/123/update_part" }
+        let(:method)  { "PATCH" }
+        it { should == :update_part }
+      end
     end
   end
 end

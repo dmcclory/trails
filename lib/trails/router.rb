@@ -30,12 +30,27 @@ module Trails
     end
 
     def put(method_name)
-      controllers.first.build_app_for(method_name)
-      routes.unshift( { path:/.*\/#{method_name}/, method: "PUT", action:  method_name } )
+      add_custom_member_route("PUT", method_name)
     end
 
     def get(method_name)
-      controllers.first.build_app_for(method_name)
+      add_custom_member_route("GET", method_name)
+    end
+
+    def post(method_name)
+      add_custom_member_route("POST", method_name)
+    end
+
+    def delete(method_name)
+      add_custom_member_route("DELETE", method_name)
+    end
+
+    def patch(method_name)
+      add_custom_member_route("PATCH", method_name)
+    end
+
+    def add_custom_member_route(http_method, action)
+      routes.unshift( { path: /.*\/#{action}/, method: http_method, action: action } )
     end
 
     def call(env)
