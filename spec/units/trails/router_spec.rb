@@ -2,8 +2,11 @@ require 'spec_helper'
 
 describe Trails::Router do
 
-  let!(:foo_controller_class) { class_double("FoosController",
-                                           new: foo_controller).as_stubbed_const }
+  let!(:foo_controller_class) {
+    class_double("FoosController",
+                 new: foo_controller,
+                 resource_name: "foos").as_stubbed_const
+  }
   let(:env) { { "PATH_INFO" => "/foos" , "REQUEST_METHOD" => "GET"} }
   let(:endpoint) { double( call: [200, {}, ['Success!'] ] ) }
   let(:foo_controller) {
@@ -12,6 +15,11 @@ describe Trails::Router do
                     action_for: endpoint
                    )
   }
+  let(:missing_resource_controller_class) {
+    class_double("MissingResourceController",
+                 new: missing_resource_controller,
+                 resource_name: "missing_resource").as_stubbed_const
+  }
   let(:missing_resource_controller) { double }
 
   context "when defining the routes" do
@@ -19,7 +27,7 @@ describe Trails::Router do
       context "when given a plural resource name" do
         it "adds a new resource controller to the router's list of controller" do
           subject.resources :foos
-          expect(subject.controllers).to include(foo_controller)
+          expect(subject.controller_classes).to include(foo_controller_class)
         end
       end
     end
@@ -27,8 +35,8 @@ describe Trails::Router do
 
   context "when dispatching requests to controllers" do
     before do
-      subject.controllers = [foo_controller]
-      subject.missing_resource_controller = missing_resource_controller
+      subject.controller_classes = [foo_controller_class]
+      subject.missing_resource_controller_class = missing_resource_controller_class
     end
 
     describe "#call" do
@@ -103,7 +111,7 @@ describe Trails::Router do
       let(:method) { "DELETE" }
       it { should == :destroy }
       it "this doesn't make sense" do
-        expect(router.controllers.length).to eq 0
+        expect(router.controller_classes.length).to eq 0
       end
     end
 

@@ -1,11 +1,11 @@
 module Trails
   class Router
 
-    attr_accessor :controllers
-    attr_accessor :missing_resource_controller
+    attr_accessor :controller_classes
+    attr_accessor :missing_resource_controller_class
 
     def initialize
-      @controllers = []
+      @controller_classes = []
     end
 
     def draw()
@@ -14,9 +14,8 @@ module Trails
 
     def resources(name, &block)
       resource_controller = name.capitalize.to_s + "Controller"
-      controller = Module.const_get(resource_controller).new
-      controllers.delete(controller)
-      controllers << controller
+      controller = Module.const_get(resource_controller)
+      controller_classes << controller
       self.instance_eval(&block) if block_given?
     end
 
@@ -62,8 +61,9 @@ module Trails
 
     def controller_for(route)
       resource_name = route.split("/")[1]
-      controller = self.controllers.select { |c| resource_name == c.resource_name }.first
-      controller || missing_resource_controller
+      controller_class = self.controller_classes.select { |c| resource_name == c.resource_name }.first
+      controller_class ||= missing_resource_controller_class
+      controller_class.new
     end
 
     def action_for(segment, method="GET")
