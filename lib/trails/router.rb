@@ -55,8 +55,11 @@ module Trails
       resource, rest = split_url(env["PATH_INFO"])
       controller = controller_for(resource)
       action = action_for(rest, env["REQUEST_METHOD"])
-      app = controller.action_for(action)
-      app.call(env)
+      dispatch(controller, action, env)
+    end
+
+    def dispatch(controller, action, env)
+      controller.rack_app(action).call(env)
     end
 
     def controller_for(route)

@@ -16,7 +16,7 @@ module Trails
       end
     end
 
-    def action_for action
+    def rack_app action
       @actions[action]
     end
 

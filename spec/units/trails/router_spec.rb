@@ -12,7 +12,7 @@ describe Trails::Router do
   let(:foo_controller) {
     instance_double("FoosController",
                     resource_name: "foos",
-                    action_for: endpoint
+                    rack_app: endpoint
                    )
   }
   let(:missing_resource_controller_class) {

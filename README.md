@@ -10,7 +10,7 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
     - ~~ index, show, create, update, new, edit, destroy ~~
     - ~~ router instantiates a new controller for each request ~~
     - router supports `only` param
-  - ~~ Controller.action() returns a rack app which executes a controller action ~~
+  - ~~ Controller.rack_app() returns a rack app which executes a controller action ~~
   - router supports custom mappings
     - ~~ member actions ~~
     - collection actions

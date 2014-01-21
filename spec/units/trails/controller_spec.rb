@@ -20,8 +20,8 @@ describe Trails::Controller do
     end
   end
 
-  describe "#action_for" do
-    let (:action) { subject.action_for(:read) }
+  describe "#rack_app" do
+    let (:action) { subject.rack_app(:read) }
     it "returns a Rack app for a controller action" do
       expect(action).to respond_to(:call)
     end
