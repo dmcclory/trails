@@ -42,4 +42,22 @@ describe Trails::Controller do
       expect(subject.resource_name).to eq "foos"
     end
   end
+
+  describe "#params" do
+    context "in a controller action" do
+      let(:subclass) { Class.new(described_class) do
+          def read(*)
+            render text: params[:awesome]
+          end
+        end
+      }
+      let(:env) { { :awesome => "You betcha!" } }
+      before do
+      end
+      it "makes the env available as a hash with indifferent access" do
+        response = subject.rack_app(:read).call(env)
+        expect(response.last).to eq ["You betcha!"]
+      end
+    end
+  end
 end
