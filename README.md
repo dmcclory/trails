@@ -16,9 +16,14 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
     - collection actions
 
 
-- Templates
+- Templates, rendering & status codes
+  - render text
+  - render json
   - render ERB template
   - config allows different renderers
+
+- Redirects
+- Multi-word resource names
 
 - Models
   - use ROM models
@@ -29,4 +34,3 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - command line app
     - trails server
   - url helpers
-

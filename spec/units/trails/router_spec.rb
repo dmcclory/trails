@@ -125,37 +125,78 @@ describe Trails::Router do
             delete :special_field
             patch :update_part
           end
+          collection do
+            post :add_a_new_member
+            put :undefined_semantics
+            get :special_aggregation
+            post :add_a_new_member
+            delete :really_undefined_semantics
+            patch :wakarahen
+          end
+        end
+      end
+      context "collection actions" do
+        context "custom put requests" do
+          let(:request) { "/undefined_semantics" }
+          let(:method)  { "PUT" }
+          it { should == :undefined_semantics }
+        end
+
+        context "custom get requests" do
+          let(:request) { "/special_aggregation" }
+          let(:method)  { "GET" }
+          it { should == :special_aggregation }
+        end
+
+        context "custom post requests" do
+          let(:request) { "/add_a_new_member" }
+          let(:method)  { "POST" }
+          it { should == :add_a_new_member }
+        end
+
+        context "custom delete requests" do
+          let(:request) { "/really_undefined_semantics" }
+          let(:method)  { "DELETE" }
+          it { should == :really_undefined_semantics }
+        end
+
+        context "custom patch requests" do
+          let(:request) { "/wakarahen" }
+          let(:method)  { "PATCH" }
+          it { should == :wakarahen }
         end
       end
 
-      context "custom put requests" do
-        let(:request) { "/123/put_a_bird_on_it" }
-        let(:method)  { "PUT" }
-        it { should == :put_a_bird_on_it }
-      end
+      context "member actions" do
+        context "custom put requests" do
+          let(:request) { "/123/put_a_bird_on_it" }
+          let(:method)  { "PUT" }
+          it { should == :put_a_bird_on_it }
+        end
 
-      context "custom get requests" do
-        let(:request) { "/123/special_info" }
-        let(:method)  { "GET" }
-        it { should == :special_info }
-      end
+        context "custom get requests" do
+          let(:request) { "/123/special_info" }
+          let(:method)  { "GET" }
+          it { should == :special_info }
+        end
 
-      context "custom post requests" do
-        let(:request) { "/123/dont_do_that" }
-        let(:method)  { "POST" }
-        it { should == :dont_do_that }
-      end
+        context "custom post requests" do
+          let(:request) { "/123/dont_do_that" }
+          let(:method)  { "POST" }
+          it { should == :dont_do_that }
+        end
 
-      context "custom delete requests" do
-        let(:request) { "/123/special_field" }
-        let(:method)  { "DELETE" }
-        it { should == :special_field }
-      end
+        context "custom delete requests" do
+          let(:request) { "/123/special_field" }
+          let(:method)  { "DELETE" }
+          it { should == :special_field }
+        end
 
-      context "custom patch requests" do
-        let(:request) { "/123/update_part" }
-        let(:method)  { "PATCH" }
-        it { should == :update_part }
+        context "custom patch requests" do
+          let(:request) { "/123/update_part" }
+          let(:method)  { "PATCH" }
+          it { should == :update_part }
+        end
       end
     end
   end
