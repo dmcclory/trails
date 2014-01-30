@@ -13,8 +13,10 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - ~~ Controller.rack_app() returns a rack app which executes a controller action ~~
   - router supports custom mappings
     - ~~ member actions ~~
-    - collection actions
+    - ~~ collection actions ~~
 
+- Rack/test -> integrations
+  - tiny.rb - demonstrates most basic functionality
 
 - Templates, rendering & status codes
   - render text
@@ -29,8 +31,8 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - use ROM models
 
 - User Experience
+  - url helpers
   - autoload code
   - stack trace error page
   - command line app
     - trails server
-  - url helpers
