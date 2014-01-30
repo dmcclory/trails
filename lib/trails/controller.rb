@@ -31,7 +31,11 @@ module Trails
     end
 
     def resource_name
-      self.class.name.to_s.gsub(/Controller/, "").downcase
+      self.class.resource_name
+    end
+
+    def self.resource_name
+      name.to_s.gsub(/Controller/, "").downcase
     end
 
   end
