@@ -10,8 +10,12 @@ module Trails
     end
 
     def render(options)
-      self.body = Array( options[:text])
-
+      if options[:json]
+        headers['Content-Type'] = 'application/json'
+        self.body = options[:json].to_json
+      else
+        self.body = Array( options[:text])
+      end
     end
   end
 end

@@ -63,5 +63,15 @@ describe Trails::Renderer do
         expect(subject.body).to eq ["Hello World!"]
       end
     end
+
+    context "given json" do
+      before do
+        subject.headers = {}
+        subject.render json: [1, 2, 3]
+      end
+      it "sets the Content-type header to json" do
+        expect(subject.headers['Content-Type']).to eq 'application/json'
+      end
+    end
   end
 end

@@ -16,11 +16,11 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
     - ~~ collection actions ~~
 
 - Rack/test -> integrations
-  - tiny.rb - demonstrates most basic functionality
+  - ~~tiny.rb - demonstrates most basic functionality~~
 
 - Templates, rendering & status codes
   - render text
-  - render json
+  - ~~render json~~
   - render ERB template
   - config allows different renderers
 
