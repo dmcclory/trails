@@ -55,7 +55,13 @@ module Trails
       resource, rest = split_url(env["PATH_INFO"])
       controller = controller_for(resource)
       action = action_for(rest, env["REQUEST_METHOD"])
+      env["id"] = extract_member_id(env["PATH_INFO"])
       dispatch(controller, action, env)
+    end
+
+    def extract_member_id(path)
+      value = path.split("/").pop
+      value
     end
 
     def dispatch(controller, action, env)

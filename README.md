@@ -14,6 +14,7 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - router supports custom mappings
     - ~~ member actions ~~
     - ~~ collection actions ~~
+  - ~~ `resource/:id` available in the controller as `params[:id]` ~~
 
 - Rack/test -> integrations
   - ~~tiny.rb - demonstrates most basic functionality~~
