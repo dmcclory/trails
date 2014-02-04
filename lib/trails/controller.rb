@@ -29,19 +29,10 @@ module Trails
     private
     def build_rack_app(action)
       lambda { |*args|
-        @params = to_indifferent_access_hash(args.first)
+        @params = IndifferentAccessHash.build_from_hash(args.first)
         send(action, *args)
         [status, headers, body]
       }
     end
-
-    def to_indifferent_access_hash(env)
-      ia_hash = IndifferentAccessHash.new
-      env.each do |key, value|
-        ia_hash[key] = value
-      end
-      ia_hash
-    end
-
   end
 end
