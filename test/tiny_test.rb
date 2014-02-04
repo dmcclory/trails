@@ -1,7 +1,4 @@
-gem 'minitest'
-require 'rack/test'
-require 'minitest/autorun'
-require 'trails'
+require_relative 'helper'
 
 class HellosController < Trails::Controller
   include Trails::Renderer
