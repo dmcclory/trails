@@ -9,13 +9,25 @@ module Trails
       end
     end
 
-    def render(options)
+    def render(options={})
       if options[:json]
         headers['Content-Type'] = 'application/json'
         self.body = options[:json].to_json
-      else
+      elsif options[:text]
         self.body = Array( options[:text])
+      elsif options[:template]
+        self.body = render_body(options)
       end
+    end
+
+    def render_body(options)
+      template = ERB.new( template_for(options[:template]) )
+      template.result(binding)
+    end
+
+    def template_for(template_name)
+      name = template_name =~ /#/ ? tempalte_name : "#{resource_name}##{template_name}"
+      Templates.fetch(name)
     end
   end
 end
