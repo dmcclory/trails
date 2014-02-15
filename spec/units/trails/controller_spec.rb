@@ -6,6 +6,9 @@ describe Trails::Controller do
       def read(*)
         render text: "Success"
       end
+
+      def index(*)
+      end
     end
   }
 
@@ -21,13 +24,30 @@ describe Trails::Controller do
   end
 
   describe "#rack_app" do
-    let (:action) { subject.rack_app(:read) }
+    let(:action_name)   { :read }
+    let (:action)       { subject.rack_app(action_name) }
+
     it "returns a Rack app for a controller action" do
       expect(action).to respond_to(:call)
     end
+
     describe "the Rack app" do
       it "returns a status-header-body triple" do
         expect(action.call({})).to eq(response)
+      end
+
+      context "controller action does not call render" do
+        let(:resource_name) { "foos" }
+        let(:action_name)   { :index }
+
+        before do
+          allow(subject).to receive(:resource_name) { resource_name }
+        end
+
+        it "renders the teplate registered for the resource name & action" do
+          expect(controller).to receive(:render).with( template: "#{resource_name}##{action_name}")
+          action.call({})
+        end
       end
     end
   end

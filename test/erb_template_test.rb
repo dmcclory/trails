@@ -9,7 +9,6 @@ class FoosController < Trails::Controller
 
   def index(env)
     @entries = ["amaze", "wow", "doge"]
-    render template: 'index'
   end
 
   def show(env)
@@ -37,7 +36,7 @@ class FooAppTest < MiniTest::Test
     assert_match /dave's Ninja Template/, last_response.body
   end
 
-  def test_render_index_builds_erb_template
+  def test_render_a_default_template
     get '/foos'
     assert last_response.ok?
     assert_match /2: doge/, last_response.body

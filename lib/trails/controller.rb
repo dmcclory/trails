@@ -31,6 +31,7 @@ module Trails
       lambda { |*args|
         @params = IndifferentAccessHash.build_from_hash(args.first)
         send(action, *args)
+        render template: "#{resource_name}##{action}" unless render_called?
         [status, headers, body]
       }
     end

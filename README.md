@@ -24,7 +24,7 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - ~~render json~~
   - render ERB template
     - ~~ with name, register templates manually ~~
-    - defaults to controller/action, register templates manually
+    - ~~ defaults to controller/action, register templates manually ~~
   - register views automatically
   - forms!
   - config allows different renderers

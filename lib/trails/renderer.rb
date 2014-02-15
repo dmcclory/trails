@@ -10,10 +10,12 @@ module Trails
     end
 
     def render(options={})
+      @render_called = true
       if options[:json]
         headers['Content-Type'] = 'application/json'
         self.body = options[:json].to_json
       elsif options[:text]
+        # since String implements each, is it fair to just return a string?
         self.body = Array( options[:text])
       elsif options[:template]
         self.body = render_body(options)
@@ -26,8 +28,12 @@ module Trails
     end
 
     def template_for(template_name)
-      name = template_name =~ /#/ ? tempalte_name : "#{resource_name}##{template_name}"
+      name = template_name =~ /#/ ? template_name : "#{resource_name}##{template_name}"
       Templates.fetch(name)
+    end
+
+    def render_called?
+      @render_called
     end
   end
 end
