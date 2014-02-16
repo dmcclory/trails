@@ -22,6 +22,12 @@ module Trails
       end
     end
 
+    def redirect_to(path)
+      @render_called = true
+      self.headers['Location'] = path
+      self.status = 302
+    end
+
     def render_body(options)
       template = ERB.new( template_for(options[:template]) )
       template.result(binding)

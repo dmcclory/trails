@@ -74,4 +74,48 @@ describe Trails::Renderer do
       end
     end
   end
+
+  describe "#redirect_to" do
+
+    let(:controller_class) {
+      Class.new do
+        attr_accessor :status,:headers, :body
+        include Trails::Renderer
+      end
+    }
+    subject { controller_class.new }
+
+    before do
+      subject.headers = {}
+    end
+
+    it "returns a response with the Location header set" do
+      subject.redirect_to "/awesome"
+      expect(subject.headers['Location']).to eq '/awesome'
+    end
+  end
+
+  describe "render_called?" do
+    let(:controller_class) {
+      Class.new do
+        attr_accessor :status, :headers, :body
+        include Trails::Renderer
+      end
+    }
+    before do
+      subject.headers = {}
+    end
+
+    subject { controller_class.new }
+
+    it "returns true if #render has been called" do
+      subject.render text: "Boogie Woogie"
+      expect(subject.render_called?).to eq true
+    end
+
+    it "returns true if #redirect_to has been called" do
+      subject.redirect_to "/frankenstein/island"
+      expect(subject.render_called?).to eq true
+    end
+  end
 end

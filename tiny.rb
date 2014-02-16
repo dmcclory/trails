@@ -7,6 +7,10 @@ class HellosController < Trails::Controller
     render text: "<h1>Hello World!</h1>"
     headers["Content-Type"] = "text/html"
   end
+
+  def show(env)
+    redirect_to "/hellos"
+  end
 end
 
 router = Trails::Router.new

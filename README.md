@@ -12,7 +12,7 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
     - router supports `only` param
   - ~~ Controller.rack_app() returns a rack app which executes a controller action ~~
   - router supports custom mappings
-    - ~~ member actions ~~
+    - ~~ :member actions ~~
     - ~~ collection actions ~~
   - ~~ `resource/:id` available in the controller as `params[:id]` ~~
 
@@ -25,18 +25,34 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
   - render ERB template
     - ~~ with name, register templates manually ~~
     - ~~ defaults to controller/action, register templates manually ~~
-  - register views automatically
-  - forms!
-  - config allows different renderers
+    - render nothing: true
+    - render file: '/...' (takes an absolute path)
+    - render has string/symbol indifference
+    - render action: X is the same as render X
+    - render inline template
+    - render xml
+    - render js
+  - render options
+    - layout specifies a layout
+      - a lot of stuff [here](http://guides.rubyonrails.org/layouts_and_rendering.html#using-render) and [here](http://guides.rubyonrails.org/layouts_and_rendering.html#structuring-layouts) on how layouts work.
+    - content_type sets the content type header
+    - status sets the status code
+    - location sets the Location header
 
-- Redirects
+  - register views automatically
+
+- ~~Redirects~~
+
+- url helpers
+
 - Multi-word resource names
+- config allows different renderers (haml, slim)
+- forms!
 
 - Models
   - use ROM models
 
 - User Experience
-  - url helpers
   - autoload code
   - stack trace error page
   - command line app
