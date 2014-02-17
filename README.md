@@ -1,7 +1,49 @@
 ##  Hello
-This is a Rails clone. It's not intended to be feature complete. Instead, it's intended to be a learning project, both for us, the builders, but also for any readers. The code intended to model what Rails does. (We're aware of Noah Gibb's Rebuilding Rails book, but some times it's more useful to build it for yourself)
+This is a Rails clone. It's not intended to be feature complete. Instead, it's intended to be a learning project, both for us, the builders, but also for any readers. The code intended to model what Rails does. (We're aware of Noah Gibb's Rebuilding Rails book, but some times it's more fun to build it for yourself)
 
 We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Better Errors)
+
+## Sample app
+
+```
+# create a normal looking Rails controller
+class DogesController < Trails::Controller
+  def index
+    @doges = ["wowe", "such control"]
+  end
+end
+
+# register templates
+# use 'controller_name#action_name' as the key and pass an ERB template
+
+Trails::Templates.register('doges#index', '<ol><% @doges.each do |doge| %> <li><%= doge %></li><% end %></ol>')
+
+# register routes to a controller:
+router = Trails::Router.new
+router.draw do |config|
+  config.resources :doges
+end
+
+# set up a Thin (or any other Rack server) and point it at the router
+# the router is a rack app!
+
+Rack::Server.start(
+  :app => router,
+  :Port => 9292
+)
+```
+
+You can run this example with `ruby -Ilib example/doge.rb`
+
+## Tests
+
+We use Rspec *and* MiniTest. That's right. (Rack::Test obviously worked with MiniTest, so the feature tests got written in it.). to run all the tests:
+
+```
+rake
+```
+
+To run only the feature tests: `rake test`
 
 ## Feature Roadmap:
 
