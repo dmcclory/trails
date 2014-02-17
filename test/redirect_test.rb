@@ -27,7 +27,7 @@ class RedirectionTests < MiniTest::Test
 
   def test_redirect_returns_http_redirect_responses
     get '/bars/123'
-    assert last_response.ok?
+    assert_equal true, last_response.redirect?
     assert_match /\/bars$/, last_response.headers["LOCATION"]
 
   end
