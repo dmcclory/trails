@@ -68,7 +68,7 @@ describe Trails::Controller do
   describe "#params" do
     context "in a controller action" do
       let(:subclass) { Class.new(described_class) do
-          def read(*)
+          def read
             render text: params[:awesome]
           end
         end

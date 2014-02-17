@@ -6,11 +6,11 @@ Trails::Templates.register "foos#index", """<% @entries.each_with_index do |entr
 
 class FoosController < Trails::Controller
 
-  def index(env)
+  def index
     @entries = ["amaze", "wow", "doge"]
   end
 
-  def show(env)
+  def show
     @name = params[:id]
     render template: 'show'
   end

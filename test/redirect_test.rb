@@ -2,11 +2,11 @@ require_relative 'helper'
 
 class BarsController < Trails::Controller
 
-  def index(*)
+  def index
     render text: "Redirected, fool!"
   end
 
-  def show(env)
+  def show
     redirect_to "/bars"
   end
 end

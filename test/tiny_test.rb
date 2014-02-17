@@ -2,12 +2,12 @@ require_relative 'helper'
 
 class HellosController < Trails::Controller
 
-  def index(env)
+  def index
     render text: "<h1>Hello World!</h1>"
     headers["Content-Type"] = "text/html"
   end
 
-  def show(env)
+  def show
     render text: "<h1>Hello #{params[:id]}!</h1>"
     headers["Content-Type"] = "text/html"
   end

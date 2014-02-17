@@ -30,7 +30,7 @@ module Trails
     def build_rack_app(action)
       lambda { |*args|
         @params = IndifferentAccessHash.build_from_hash(args.first)
-        send(action, *args)
+        send(action)
         default_render(action) unless render_called?
         [status, headers, body]
       }
