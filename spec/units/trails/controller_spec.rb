@@ -47,7 +47,9 @@ describe Trails::Controller do
         it "renders the teplate registered for the resource name & action" do
           expect(controller).to receive(:render).with( template: "#{resource_name}##{action_name}")
           action.call({})
+          expect(controller.headers['Content-Type']).to eq 'text/html'
         end
+
       end
     end
   end

@@ -31,9 +31,14 @@ module Trails
       lambda { |*args|
         @params = IndifferentAccessHash.build_from_hash(args.first)
         send(action, *args)
-        render template: "#{resource_name}##{action}" unless render_called?
+        default_render(action) unless render_called?
         [status, headers, body]
       }
+    end
+
+    def default_render(action)
+      render template: "#{resource_name}##{action}"
+      headers['Content-Type'] = 'text/html'
     end
   end
 end
