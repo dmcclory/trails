@@ -1,7 +1,6 @@
 require_relative 'helper'
 
 class JsonsController < Trails::Controller
-  include Trails::Renderer
 
   def index(env)
     @foo = [1, 2, 3]

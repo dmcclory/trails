@@ -1,7 +1,6 @@
 require_relative 'helper'
 
 class BarsController < Trails::Controller
-  include Trails::Renderer
 
   def index(*)
     render text: "Redirected, fool!"

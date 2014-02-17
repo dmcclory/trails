@@ -5,7 +5,6 @@ Trails::Templates.register "foos#show", "<%= @name %>'s Ninja Template"
 Trails::Templates.register "foos#index", """<% @entries.each_with_index do |entry, index| %><%= index.to_s + ': ' + entry + '\n' %><% end %>"""
 
 class FoosController < Trails::Controller
-  include Trails::Renderer
 
   def index(env)
     @entries = ["amaze", "wow", "doge"]

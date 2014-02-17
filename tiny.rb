@@ -1,7 +1,6 @@
 require 'trails'
 
 class HellosController < Trails::Controller
-  include Trails::Renderer
 
   def index(env)
     render text: "<h1>Hello World!</h1>"
