@@ -6,25 +6,25 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
 ## Feature Roadmap:
 
 - Router & Controller
-  - ~~ router creates REST resources for a controller ~~
-    - ~~ index, show, create, update, new, edit, destroy ~~
-    - ~~ router instantiates a new controller for each request ~~
+  -~~router creates REST resources for a controller~~
+    -~~index, show, create, update, new, edit, destroy~~
+    -~~router instantiates a new controller for each request~~
     - router supports `only` param
-  - ~~ Controller.rack_app() returns a rack app which executes a controller action ~~
+  -~~Controller.rack_app() returns a rack app which executes a controller action~~
   - router supports custom mappings
-    - ~~ :member actions ~~
-    - ~~ collection actions ~~
-  - ~~ `resource/:id` available in the controller as `params[:id]` ~~
+    -~~:member actions~~
+    -~~collection actions~~
+  -~~`resource/:id` available in the controller as `params[:id]`~~
 
 - Rack/test -> integrations
-  - ~~tiny.rb - demonstrates most basic functionality~~
+  -~~tiny.rb - demonstrates most basic functionality~~
 
 - Templates, rendering & status codes
   - render text
-  - ~~render json~~
+  -~~render json~~
   - render ERB template
-    - ~~ with name, register templates manually ~~
-    - ~~ defaults to controller/action, register templates manually ~~
+    -~~with name, register templates manually~~
+    -~~defaults to controller/action, register templates manually~~
     - render nothing: true
     - render file: '/...' (takes an absolute path)
     - render has string/symbol indifference
@@ -41,7 +41,7 @@ We use elements from the Rails ecosystem where appropriate (Thor, Bundler, Bette
 
   - register views automatically
 
-- ~~Redirects~~
+-~~Redirects~~
 
 - url helpers
 
